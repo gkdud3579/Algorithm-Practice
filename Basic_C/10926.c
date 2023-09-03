@@ -7,7 +7,6 @@ int main(void)
 {
     char username[51]; // 최대 길이가 50인 문자열을 저장할 수 있는 배열
 
-    // 아이디 입력
     scanf("%s", username);
 
     // 아이디 뒤에 "??!"를 추가하여 출력
