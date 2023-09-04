@@ -4,7 +4,7 @@ int main(void)
 {
     int score;
 
-    scanf("%d", score);
+    scanf("%d", &score);
 
     if (score >= 90 && score <= 100)
         printf("A");
