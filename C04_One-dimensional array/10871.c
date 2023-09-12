@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-int main(void)
+int main()
 {
     int N, X;
     scanf("%d %d", &N, &X);
@@ -13,7 +13,7 @@ int main(void)
         scanf("%d", &num);
 
         if(num < X)
-            printf("%d", num);
+            printf("%d ", num);
     }
     return 0;
 }
