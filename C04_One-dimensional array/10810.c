@@ -18,4 +18,8 @@ int main()
             baskets[b] = k;
     }
     
+    for (int b = 1; b <= N; b++)
+        printf("%d ", baskets[b]);
+
+    return 0;
 }
