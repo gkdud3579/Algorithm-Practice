@@ -21,8 +21,10 @@ int main()
             if(missing1 == 0)
                 missing1 = i;
             else
+            {
                 missing2 = i;
                 break;
+            }
         }
     }
     printf("%d\n%d\n", missing1, missing2);
