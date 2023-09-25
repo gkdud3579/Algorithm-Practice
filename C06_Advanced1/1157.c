@@ -8,9 +8,7 @@ int main() {
     scanf("%s", word);
 
     for (int i = 0; word[i]; i++) 
-    {
         word[i] = tolower(word[i]);
-    }
 
     int count[26] = {0};
     int maxCount = 0;
