@@ -1,5 +1,3 @@
 function solution(my_string) {
-    let numbers = my_string.split('').filter(char => !isNaN(char) && char !== ' ');
-
-    return numbers.map(Number).sort((a, b) => a - b);
+    return my_string.match(/\d/g).sort((a, b) => a - b).map(n => Number(n));
 }
