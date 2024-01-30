@@ -16,7 +16,7 @@ rl.on('line', (line) => {
     S.push(line.split(' ').map(Number));
     lineCount++;
     if (lineCount === N) {
-      console.log(calculateDifference(N, S));
+      console.log(calculateMinDifference(N, S));
       rl.close();
     }
   }
@@ -24,45 +24,40 @@ rl.on('line', (line) => {
   process.exit();
 });
 
-function calculateDifference(N, S) {
-    const combinations = getCombinations(Array.from({length: N}, (_, i) => i), N / 2);
+function calculateMinDifference(N, S) {
     let minDifference = Number.MAX_SAFE_INTEGER;
+    const team = new Array(N).fill(false);
 
-    for (let i = 0; i < combinations.length / 2; i++) {
-        const teamA = combinations[i];
-        const teamB = combinations[combinations.length - 1 - i];
+    function backtrack(index, count) {
+        if (count === N / 2) {
+            const startTeam = [], linkTeam = [];
+            for (let i = 0; i < N; i++) {
+                if (team[i]) startTeam.push(i);
+                else linkTeam.push(i);
+            }
 
-        const abilityA = calculateTeamAbility(teamA, S);
-        const abilityB = calculateTeamAbility(teamB, S);
-        const difference = Math.abs(abilityA - abilityB);
+            const startAbility = calculateTeamAbility(startTeam, S);
+            const linkAbility = calculateTeamAbility(linkTeam, S);
+            minDifference = Math.min(minDifference, Math.abs(startAbility - linkAbility));
+            return;
+        }
 
-        minDifference = Math.min(minDifference, difference);
+        for (let i = index; i < N; i++) {
+            team[i] = true;
+            backtrack(i + 1, count + 1);
+            team[i] = false;
+        }
     }
 
+    backtrack(0, 0);
     return minDifference;
-}
-
-function getCombinations(arr, selectNumber) {
-    const results = [];
-    if (selectNumber === 1) return arr.map(value => [value]);
-
-    arr.forEach((fixed, index, origin) => {
-        const rest = origin.slice(index + 1);
-        const combinations = getCombinations(rest, selectNumber - 1);
-        const attached = combinations.map(combination => [fixed, ...combination]);
-        results.push(...attached);
-    });
-
-    return results;
 }
 
 function calculateTeamAbility(team, S) {
     let ability = 0;
     for (let i = 0; i < team.length; i++) {
-        for (let j = 0; j < team.length; j++) {
-            if (i !== j) {
-                ability += S[team[i]][team[j]];
-            }
+        for (let j = i + 1; j < team.length; j++) {
+            ability += S[team[i]][team[j]] + S[team[j]][team[i]];
         }
     }
     return ability;
